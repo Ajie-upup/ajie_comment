@@ -27,7 +27,7 @@ public class ShopController {
     public IShopService shopService;
 
     /**
-     * 根据id查询商铺信息
+     * 根据id查询商铺信息  ---  redis缓存加快查询速率，但是需要设置缓存超时时间，防止数据不一致
      * @param id 商铺id
      * @return 商铺详情数据
      */
@@ -50,15 +50,14 @@ public class ShopController {
     }
 
     /**
-     * 更新商铺信息
+     * 更新商铺信息   ---  保存数据时，需要先修改数据库，然后再删除缓存（最佳实践）
      * @param shop 商铺数据
      * @return 无
      */
     @PutMapping
     public Result updateShop(@RequestBody Shop shop) {
         // 写入数据库
-        shopService.updateById(shop);
-        return Result.ok();
+        return shopService.update(shop);
     }
 
     /**
