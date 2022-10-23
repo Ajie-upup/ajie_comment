@@ -104,4 +104,26 @@ public class UserController {
         // 返回
         return Result.ok(userDTO);
     }
+
+    /**
+     * 用户签到功能
+     *
+     * @return
+     */
+    @PostMapping("/sign")
+    public Result sign() {
+        return userService.sign();
+    }
+
+    /**
+     * 签到统计，从最后一次开始，往前数，直到第一个未签到的天数截止
+     * 就是连续签到的天数
+     *
+     * @return
+     */
+    @GetMapping("/sign/count")
+    public Result signCount() {
+        return userService.signCount();
+    }
+
 }
